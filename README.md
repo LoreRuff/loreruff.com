@@ -48,16 +48,6 @@ assets/cli.js       lsh shell, suggestions, sl, jokes
 assets/fonts/       IBM Plex Mono 400/500/700 (self-hosted woff2, latin)
 ```
 
-## Run locally
-
-```sh
-python3 -m http.server 8031
-# http://localhost:8031        (EN)
-# http://localhost:8031/it/    (IT)
-```
-
-Second visit in the same session skips limine+boot; any key skips the boot.
-
 ## Security notes
 
 - **Zero network requests at runtime**: no fetch/XHR/WebSocket/beacon, no
