@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LORERUFF-OS</title>
+<meta name="description" content="LORERUFF-OS — software that asks for nothing. Zero permissions, one file per module, one process.">
+<link rel="alternate" hreflang="it" href="/it/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23060907'/%3E%3Crect x='3' y='3' width='7' height='10' fill='%2339ff88'/%3E%3Crect x='11' y='3' width='2' height='2' fill='%23b06bff'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/plexmono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plexmono-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plexmono-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/os.css">
+</head>
+<body>
+
+<!-- limine-ish bootloader: the click/Enter that boots also unlocks audio -->
+<div id="limine" aria-hidden="true">
+  <div class="lim-head">
+    <b>LORERUFF-OS 1.0.0</b>
+    <span id="lim-clock"></span>
+  </div>
+  <nav class="lim-menu">
+    <div class="lim-entry" role="button">LORERUFF-OS 1.0.0</div>
+    <div class="lim-entry" role="button">LORERUFF-OS 1.0.0 — silent mode</div>
+  </nav>
+  <div class="lim-foot">
+    <span>&uarr;&darr; select · &#9166; boot · click works too</span>
+    <span class="blink-slow">press DEL to enter SETUP</span>
+  </div>
+</div>
+
+<!-- kernel boot: every line is a real measurement -->
+<div id="boot" class="hidden" aria-hidden="true"><span id="bootlog"></span></div>
+
+<!-- CMOS SETUP: real settings for the real site (Del at boot) -->
+<div id="cmos" aria-hidden="true">
+  <div class="cmos-box">
+    <div class="cmos-title"><span>LORERUFF-OS CMOS SETUP</span><span id="cmos-clock"></span></div>
+    <div class="cmos-body">
+      <div class="cmos-row"><span>PC Speaker</span><span class="cmos-val">On</span></div>
+      <div class="cmos-row"><span>CRT Scanlines</span><span class="cmos-val">On</span></div>
+      <div class="cmos-row"><span>Verbose Boot</span><span class="cmos-val">Off</span></div>
+      <div class="cmos-stat">Boot Count: <span id="cmos-boots">0</span></div>
+    </div>
+    <div class="cmos-hint">
+      <span>&uarr;&darr; select · &#9166; toggle · F10 save &amp; exit · ESC quit</span>
+      <span><b id="cmos-save">F10</b> · <b id="cmos-quit">ESC</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- PXE ghost: one cold boot in ten thinks there is no disk -->
+<div id="pxe"><pre id="pxelog"></pre></div>
+
+<!-- login: guest, zero taps, real timestamps -->
+<div id="login"><pre id="loginlog"></pre></div>
+
+<!-- screensaver: 3 real idle minutes, zero permission -->
+<div id="nosignal" role="status">SIGNAL LOST, ARE YOU HERE?</div>
+<canvas id="saver" aria-hidden="true"></canvas>
+
+<!-- kernel panic: real call trace, real reboot -->
+<div id="panic"><pre id="paniclog"></pre></div>
+
+<div class="site">
+  <header>
+    <div class="bar">
+      <span class="brand">LORERUFF-OS</span>
+      <nav class="lang">
+        <a href="/" class="active" aria-current="true">EN</a>
+        <a href="/it/">IT</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero" id="top">
+      <h1>LORERUFF-OS<span class="caret"></span></h1>
+      <p class="thesis">Software that asks for nothing.</p>
+      <p class="sub">
+        Every tool I build is an exercise in subtraction:
+        zero permissions, one file per module, one process, modular by
+        construction — pull a piece out and it still runs on its own.
+        The constraint is the feature, and everything on this page runs
+        close enough to the metal to prove it.
+      </p>
+      <p class="statusbar">$ modules: <b>loading…</b> — this space will fill with real ones. Nothing here is a mockup. <span id="uptime">up 0:00</span></p>
+    </div>
+
+    <section id="modules">
+      <h2>modules</h2>
+      <p class="modnote">
+        The slots are placeholders on purpose: real modules land here when
+        they are ready. No fake stats, no fake screenshots, no fake ratings.
+      </p>
+      <div class="mods">
+        <article class="module" data-name="module-01">
+          <h3>module-01 <span class="chip">not installed</span></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </article>
+        <article class="module" data-name="module-02">
+          <h3>module-02 <span class="chip">not installed</span></h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </article>
+        <article class="module" data-name="module-03">
+          <h3>module-03 <span class="chip">not installed</span></h3>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>how this site is made</h2>
+      <p style="margin-bottom:16px">
+        The boot sequence you just watched (or skipped) is not a video:
+        every line is a live measurement of this exact page load, taken on
+        your device, right now. Same numbers, here:
+      </p>
+      <table class="receipt">
+        <tr><td>HTML parse</td><td class="val" id="r-parse">measuring…</td></tr>
+        <tr><td>stylesheets</td><td class="val" id="r-css">measuring…</td></tr>
+        <tr><td>scripts</td><td class="val" id="r-js">measuring…</td></tr>
+        <tr><td>fonts (self-hosted)</td><td class="val" id="r-fonts">measuring…</td></tr>
+        <tr><td>total transfer</td><td class="val" id="r-total">measuring…</td></tr>
+        <tr><td>requests</td><td class="val" id="r-reqs">measuring…</td></tr>
+        <tr><td>dependencies</td><td class="val">0</td></tr>
+        <tr><td>trackers, cookies, analytics</td><td class="val">0</td></tr>
+        <tr><td>build step</td><td class="val">none — view source, it is short on purpose</td></tr>
+      </table>
+    </section>
+
+    <section id="contact">
+      <h2>contact</h2>
+      <p><a href="mailto:lorenzoruffato@loreruff.com">lorenzoruffato@loreruff.com</a></p>
+      <p><a href="https://github.com/LoreRuff" rel="me">github.com/LoreRuff</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="sig">LORERUFF-OS 1.0.0</span> — handcrafted HTML/CSS/JS ·
+      no framework · no build · <a href="/">EN</a> / <a href="/it/">IT</a>
+    </div>
+  </footer>
+</div>
+
+<!-- case screws: unscrew all four, the bezel opens on the inner plate -->
+<button class="screw s1" type="button" aria-label="case screw"></button>
+<button class="screw s2" type="button" aria-label="case screw"></button>
+<button class="screw s3" type="button" aria-label="case screw"></button>
+<button class="screw s4" type="button" aria-label="case screw"></button>
+
+<!-- inner plate: real numbers only -->
+<div id="plate">
+  <div class="plate-box">
+    <div class="plate-title">LORERUFF-OS — inner plate</div>
+    <div class="plate-row"><span>document (html)</span><b id="p-html">—</b></div>
+    <div class="plate-row"><span>stylesheets</span><b id="p-css">—</b></div>
+    <div class="plate-row"><span>scripts</span><b id="p-js">—</b></div>
+    <div class="plate-row"><span>dom nodes</span><b id="p-dom">—</b></div>
+    <div class="plate-row"><span>external dependencies</span><b>0</b></div>
+    <div class="plate-row"><span>trackers</span><b>0</b></div>
+    <div class="plate-hint">click anywhere to close — the screws go back in</div>
+  </div>
+</div>
+
+<!-- lsh: the one-line shell. reads the DOM, the kernel ring and your screen -->
+<div id="clibar">
+  <div id="cli-panel"><div id="cli-out"></div></div>
+  <div id="cli-sug"></div>
+  <div class="cli-prompt">
+    <span class="ps1">guest@loreruff:~$</span>
+    <input id="cli-input" type="text" autocomplete="off" autocapitalize="off"
+           spellcheck="false" aria-label="terminal">
+    <button id="cli-min" type="button" aria-label="minimize terminal">[–]</button>
+    <button id="cli-snd" type="button" aria-label="toggle sound">[snd:on]</button>
+  </div>
+</div>
+
+<script src="assets/boot.js"></script>
+<script src="assets/cli.js"></script>
+</body>
+</html>
