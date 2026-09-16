@@ -70,16 +70,6 @@ Second visit in the same session skips limine+boot; any key skips the boot.
   into HTML. Storage holds only cosmetic preferences (speaker, scanlines,
   verbose, boot counter).
 
-## Deploy
-
-Static rsync to the webroot. From a single machine, with LF endings:
-
-```sh
-rsync -av --delete --exclude='ispirazioni' --exclude='.git' --exclude='.sync-conflict-*' ./ infomaniak:/var/www/loreruff.com/
-```
-
-`ispirazioni/` is personal notes: kept out of both the deploy and this repo.
-
 ## License
 
 [AGPL-3.0](LICENSE) — © LoreRuff
